@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="autonomous_drive" default="false"/>
+
+    <node pkg="turtlesim" type="turtlesim_node" name="turtlesim_node_run">
+        <remap from="/turtle1/cmd_vel" to="/cmd_vel"/>
+    </node>
+
+    <group if="$(arg autonomous_drive)">
+        <node pkg="ros_2310174" type="drive_in_circle.py" name="drive_in_circle_run">
+            <remap from="/turtle1/cmd_vel" to="/cmd_vel"/>
+        </node>
+        
+    </group>
+
+    <group unless= "$(arg autonomous_drive)">
+        <node pkg="ros_2310174" type="teleop_gui.py" name="teleop_gui_run">
+            <remap from="/turtle1/cmd_vel" to="/cmd_vel"/>
+        </node>
+
+    </group>
+
+
+   
+</launch>
+
+
